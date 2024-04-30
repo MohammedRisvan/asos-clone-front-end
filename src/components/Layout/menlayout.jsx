@@ -51,32 +51,48 @@ export const MenNavbar = () => {
   return (
     <div>
     <div className="h-16  bg-slate-700  w-full flex items-center text-white px-5 subdiv  ">
+    <div className="flex sticky w-full z-10 ">    
       <p className="py-5 px-5 bg-red-600 -skew-x-12 hover:bg-white hover:text-black h-full">
         Sales
       </p>
       <p onMouseEnter={()=>{dispatch({type:"SHOW",name:"newin"})}}
        onMouseLeave={()=>{dispatch({type:"HIDE"})}}
-       className={`py-5 px-3 h-full hover:bg-white  hover:text-black`}>
+       onClick={()=>{if(state.ishover==="newin"){
+        dispatch({type:"HIDE"})
+      }else{
+        dispatch({type:"SHOW",name:"newin"})
+      }}}
+       className={`py-5 px-3 h-full hover:bg-white flex flex-col  hover:text-black`}>
        <p>New In</p> 
-       <div className="flex fixed mt-5 items-center   w-full z-10">
+       <div className="flex absolute mt-11 items-center   w-full z-10">
+       {state.ishover==="newin"&&<NewIn className=''/>}
        </div>
       </p>
-     
-     
       <p
       onMouseEnter={()=>{dispatch({type:"SHOW",name:"clothing"})}}
       onMouseLeave={()=>{dispatch({type:"HIDE"})}}
-       className="py-5 px-3 hover:bg-white hover:text-black h-full">
+      onClick={()=>{if(state.ishover==="clothing"){
+        dispatch({type:"HIDE"})
+      }else{
+        dispatch({type:"SHOW",name:"clothing"})
+      }}}
+       className="py-5 px-3 hover:bg-white flex flex-col hover:text-black h-full">
         <p>Clothing</p>
-        <div className="flex fixed  items-center   w-full z-10">
-         
+        <div className="flex absolute mt-11 -ml-24   w-full z-10">
+        {state.ishover==="clothing"&&<Clothing />}         
        </div>
       </p>
       <p className="py-5 px-3 hover:bg-white hover:text-black "
       onMouseEnter={()=>{dispatch({type:"SHOW",name:"trending"})}}
       onMouseLeave={()=>{dispatch({type:"HIDE"})}}
+      onClick={()=>{if(state.ishover==="trending"){
+        dispatch({type:"HIDE"})
+      }else{
+        dispatch({type:"SHOW",name:"trending"})
+      }}}
       ><p><p>Trending</p>
-        <div className="flex fixed mt-5 items-center  justify-center z-10">
+      <div className=" flex absolute  mt-5 -ml-44   w-full z-10">
+      {state.ishover==="trending"&&<Trending  className=" "/>}
         </div>
       </p>
       <div className="flex fixed mt-5 items-center   w-full z-10">
@@ -87,8 +103,14 @@ export const MenNavbar = () => {
       <p className="py-5 px-3 hover:bg-white hover:text-black"
        onMouseEnter={()=>{dispatch({type:"SHOW",name:"shoes"})}}
       onMouseLeave={()=>{dispatch({type:"HIDE"})}}
+      onClick={()=>{if(state.ishover==="shoes"){
+        dispatch({type:"HIDE"})
+      }else{
+        dispatch({type:"SHOW",name:"shoes"})
+      }}}
       ><p>Shoe</p>
-        <div className="flex fixed mt-5 items-center  justify-center z-10">
+      <div className=" flex absolute  mt-5 -ml-80 mr-16   pr-16 z-10">
+    {state.ishover==="shoes"&&<Shoes className=''/>}
       </div></p>
       <p className="py-5 px-3 hover:bg-white hover:text-black">Accessories</p>
       <p className="py-5 px-3 hover:bg-white hover:text-black">Face + Body</p>
@@ -97,13 +119,8 @@ export const MenNavbar = () => {
       <p className="py-5 px-3 hover:bg-white hover:text-black">TopShop</p>
       <p className="py-5 px-3 hover:bg-white hover:text-black">MarketPlace</p>
       <p className="py-5 px-3 hover:bg-white hover:text-black">Sale</p>
+    
     </div>
-    <div className="flex items-center fixed justify-center w-full  z-10">    
-    {state.ishover==="clothing"&&<Clothing className="px-10" onMouseEnter={()=>{dispatch({type:"SHOW",name:"newin"})}}
-       onMouseLeave={()=>{dispatch({type:"HIDE"})}}/>}
-    {state.ishover==="shoes"&&<Shoes className=''/>}
-    {state.ishover==="trending"&&<Trending  className=" "/>}
-    {state.ishover==="newin"&&<NewIn className='w-full'/>}  
         </div>
     </div>
   );
@@ -176,7 +193,8 @@ export const NewIn = () => {
           <p>Accessories</p>
         </label>
         <hr className="ml-10 w-full" />
-        <label className="flex gap-10 items-center">
+        <label ctrending
+trendinglassName="flex gap-10 items-center">
           <img
             src={'https://images.asos-media.com/navigation/mw_spring_swimwear_480x480_1?&$n_240w$'}
             className="w-10 h-10 rounded-full p-1 border border-slate-300"
@@ -409,7 +427,7 @@ const Shoes=()=>{
 const navigate=useNavigate();
 
   return(
-  <div className="w-full h-2/5 bg-white flex justify-between py-5 px-10* text-slate-600 gap-10">
+  <div className="w-full h-2/5 bg-white flex justify-between py-5 px-10 text-slate-600 gap-10">
     <div className="flex flex-col gap-2">
       <h1 className="font-[700] text-lg text-slate-500">SHOP BY PRODUCT</h1>
       <h2 className="font-semibold text-base">Top Rated Shoes</h2>

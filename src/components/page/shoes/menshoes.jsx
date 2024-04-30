@@ -1,14 +1,15 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Link, useLocation } from "react-router-dom";
-import Axios from  "axios";
+
 import Productpage from "../productpage";
 import toast from "react-hot-toast";
+import { useraxious } from "../../../axious";
 const MenShoes = () => {
   const [showdata,setShowdata]=useState();
   
   const data=async()=>{
-    const shoew=  await Axios.get('http://localhost:3005/asos/showshoeproduct',{withCredentials:true}).catch((error)=>toast.error(error.message))
+    const shoew=  await useraxious.get('/showshoeproduct',{withCredentials:true}).catch((error)=>toast.error(error.message))
     setShowdata(shoew.data);
   }
   useEffect(()=>{

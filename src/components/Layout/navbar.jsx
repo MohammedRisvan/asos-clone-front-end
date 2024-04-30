@@ -51,12 +51,13 @@ const Navber = () => {
             placeholder="Search for itenms and brands ..."
           />
         </div>
-        <button type="button" className="h-full px-5"
+        <button className="h-full px-5"
          onMouseEnter={()=>{setProfile(true)}}
        
          onClick={()=>{if(!profile){setProfile(true)}else{setProfile(false)}}}
          onMouseLeave={()=>{setProfile(false)}}>
           <FiUser className="text-white h-10 w-7"/>
+          <div className="absolute">
         {profile&&<div   onMouseEnter={()=>{setProfile(true)}} className="w-60 -ml-16 absolute bg-white">
             <div className="w-full flex justify-between bg-blue-200 h-10 px-3 py-3">
             <span><a href="/signin">Sign In</a> |<a href="/signup">Join</a></span> <button onClick={()=>{setProfile(false)}}><RxCross1/></button>
@@ -82,16 +83,17 @@ const Navber = () => {
             <div>
             </div>
            </div>}
-           
+           </div>
         </button>
         <button className="h-full px-5">
           <IoHeartOutline
+          onClick={()=>{window.location.href='/saveditems'}}
             className="text-white w-7 h-10"
             aria-label="Like Icon"
           />
         </button>
         <button className="h-full px-5">
-          <BsBag className="text-white w-7 h-10" />
+          <BsBag className="text-white w-7 h-10"onClick={()=>{window.location.href='/cart'}} />
         </button>
       </div>
     </div>

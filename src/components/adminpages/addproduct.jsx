@@ -1,117 +1,183 @@
-import { useState } from "react"
-import { Clothing } from "../page/women";
 
-export function AddShoeProduct(){
+import React, { useState } from 'react';
+import { Editor, EditorState, RichUtils } from 'draft-js';
+import MyEditor from '../../appcounter';
+export function AddShoeProduct() {
+    const [detailes, setDetailes] = useState(null);
+    const [gender, setGender] = useState('men');
+    const [lether, setLether] = useState(false);
+    const [Size, setSize] = useState([]);
+    const totalSize = [3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5];
+    //detales text-------//
+    const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
 
-const [formdata,setFormdata]=useState({
-    lether:false,
-});
-const [imagecount,setimagecount]=useState({count:1})
-const [images,setImages]=useState([1,1,1,1])
-// function setimages(e){
-//     console.log(e.target.value)
-//     setImages([1]);
-//     for(let i=2;i<=e.target.value;i++){
-//         images.push(i);
-//     }
+    const handleChange = (newEditorState) => {
 
-    console.log(images)
-// }
+        setEditorState(newEditorState);
+    };
 
-function formsubmit(){
-    setFormdata({...formdata,images:images})
-    console.log(formdata)
-}
-return(
-<div className="flex flex-col items-center w-full h-full px-5 py-5 gap-10">
-<h1 className="font-bold text-2xl"> ADD PRODUCT PAGE</h1>
-<form className="grid grid-flow-row grid-cols-2 gap-x-2 gap-y-3 w-1/2 h-full">
-    <label>
-        <p>ProductName</p>
-        <input className="text-black  border-2 border-slate-400" type="text" name="title" onChange={(e)=>{setFormdata({...formdata,title:e.target.value})}}/>
-    </label>
-    <label>
-        <p>BrandName</p>
-        <input className="text-black  border-2 border-slate-400" type="text" name="brand" onChange={(e)=>{setFormdata({...formdata,brand:e.target.value})}}/>
-    </label>
-    <label>
-        <p>colour</p>
-        <input className="text-black  border-2 border-slate-400" type="text" name="colour" onChange={(e)=>{setFormdata({...formdata,colour:[e.target.value]})}} />
-    </label>
-    <label>
-        <p>Product Type</p>
-        <input className="text-black  border-2 border-slate-400" type="text" name="product_type" onChange={(e)=>{setFormdata({...formdata,product_type:e.target.value})}}/>
-    </label>
-    <label className="flex gap-10">
-        <label className="flex items-center gap-2">
-        <p>Lether:-</p>
-        <input className="text-black  border-2 border-slate-400" type="radio"name="lether" value={true} onChange={(e)=>{setFormdata({...formdata,lether:e.target.value})}}/>
-        </label>
-        <label className="flex items-center">
-        <p>Not Lether:-</p>
-        <input className="text-black  border-2 border-slate-400" type="radio"name="lether" value={false}  onChange={(e)=>{setFormdata({...formdata,lether:e.target.value})}}/>
-        </label>
-    </label>
-    <label>
-    <p>Body Fit</p>
-    <input className="text-black  border-2 border-slate-400" type="text" name="bodyfit" onChange={(e)=>{setFormdata({...formdata,bodyfit:e.target.value})}}/>
-    </label>
-    <label>
-        <p>Trainer Style</p>
-        <input className="text-black  border-2 border-slate-400" type="text" name="trainerstyle"  onChange={(e)=>{setFormdata({...formdata,trainerstyle:e.target.value})}}/>
-    </label>
-    {/* <label>
-        <p>imagecount</p>
-    <input className="text-black" type="number" name="count"  onChange={setimages}/>
-    </label> */}
-    <label>
-        <p>Image Urls</p>
-        <input className="text-black border-2 border-slate-400" type="text" name="image"onChange={(e)=>{console.log(e.target.value);console.log(e.target.value.split(','))
-    setFormdata({...formdata,images:[e.target.value.split(',')]})}}/>
-    </label>
-    <label>
-        <p>about</p>
-        <input className="text-black border-2 border-slate-400" type="text" onChange={()=>{}}/>
-    </label>
-    <label>
-        <p>Price</p>
-        <input className="text-black border-2 border-slate-400" type="text"/>
-        </label>
-        <label>
-            <p>sizes</p>
-            <input className="text-black border-2 border-slate-400" type="text"/>
-        </label>
-        <label>
-            <p>Product Detailes</p>
-            <input className="text-black border-2 border-slate-400" type="text"/>
-        </label>
-</form>
+    const handleBold = () => {
+        setEditorState(RichUtils.toggleInlineStyle(editorState, 'BOLD'));
+    };
 
-        <button className="bg-blue-500 px-5 py-3 rounded text-xl font-medium" onClick={formsubmit}>Next</button>
-</div>)
-}
+    const handleItalic = () => {
+        setEditorState(RichUtils.toggleInlineStyle(editorState, 'ITALIC'));
+    };
 
-// const data={
-// title:'New Balance 610 trainers in orange',
-// brand:'NewBalance',
-// colour:'Orange',
-// size:[3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10,10.5,11,11.5,12.5],
-// product_type:'trainers',
-// lether:false,
-// body_fit:['main_collection','wide_fit'],
-// trainerstyle:'New Balance 610',
-// images:['https://images.asos-media.com/products/new-balance-610-trainers-in-orange/205337534-1-orange?$n_320w$&wid=317&fit=constrain','https://images.asos-media.com/products/new-balance-610-trainers-in-orange/205337534-2?$n_320w$&wid=317&fit=constrain','https://images.asos-media.com/products/new-balance-610-trainers-in-orange/205337534-3?$n_320w$&wid=317&fit=constrain','https://images.asos-media.com/products/new-balance-610-trainers-in-orange/205337534-4?$n_320w$&wid=317&fit=constrain','https://images.asos-media.com/products/new-balance-610-trainers-in-orange/205337534-5?$n_320w$&wid=317&fit=constrain'],
-// about:'Mesh upper Sole: 100% Rubber, Upper: 100% Textile.',
-// wishlist:[{Client_id:{  type: mongoose.Schema.Types.ObjectId,
-//     ref:'Cliantdata'}},],
-// price:'126',
-// productDetals:['Shoes by New Balance','Choose your players',
-//     'Low-profile design',
-//     'Pull tabs for easy entry',
-//     'Lace-up fastening',
-//     'Padded tongue and cuff',
-//     'Signature New Balance branding',
-//     'C-CAP midsole cushioning',
-//     'Durable rubber outsole',
-//     'Textured grip tread','Product Code: 132730665'],
-// }
+    const handleUnderline = () => {
+        setEditorState(RichUtils.toggleInlineStyle(editorState, 'UNDERLINE'));
+    };
+    const handleList = () => {
+        setEditorState(RichUtils.toggleBlockType(editorState, 'unordered-list-item'));
+    };
+    //--------------//
+
+
+
+    const productType = ['Trainers', 'Shoes', 'Boots', 'Sliders', 'Sandals', 'Flip Flops', 'Wellies', 'Slippers']
+    const bodyfit = ['Main Collection', 'Wide Fit', 'Hourglass']
+    return (<div className="flex flex-col bg-blue-100 items-center w-full ">
+        <h1 className="font-bold text-2xl ">PRODUCT ADDING PAGE</h1>
+        <div className="flex gap-5">
+            <div className="grid grid-cols-3 text-sm"> <label>
+                <h1>Product Name</h1>
+                <input type="text" placeholder="Please Enter Productname" />
+            </label>
+                <label>
+                    <h1>Brand Name</h1>
+                    <input type="text" placeholder="Please Enter Brandname" />
+                </label>
+                <label>
+                    <h1>Colour</h1>
+                    <h1 className="bg-white w-60">select your colour</h1>
+                    {false && <div name="colour" id="" className="h-10 w-16">
+                        <div className="flex gap-5 bg-white w-60 h-10 px-2 items-center ">black</div>
+                        <div className=" absolute flex flex-col gap-2 bg-blue-100 w-72 px-2 h-80 overflow-y-scroll overflow-x-hidden -scroll-mb-px ">
+                            <div value="white" className="flex gap-5 bg-white w-full px-2 items-center"><div className="bg-white w-10 h-10 border border-black" />white</div>
+                            <div value="white" className="flex gap-5 bg-white w-full px-2 items-center"><div className="bg-black w-10 h-10 border border-black" />white</div>
+                            <div value="white" className="flex gap-5 bg-white w-full px-2 items-center"><div className="bg-gray-700 w-10 h-10 border border-black" />white</div>
+                            <div value="white" className="flex gap-5 bg-white w-full px-2 items-center"><div className="bg-blue-700 w-10 h-10 border border-black" />white</div>
+                            <div value="white" className="flex gap-5 bg-white w-full px-2 items-center"><div className="bg-green-700 w-10 h-10 border border-black" />white</div>
+                            <div value="white" className="flex gap-5 bg-white w-full px-2 items-center"><div className="bg-white w-10 h-10 border border-black" />white</div>
+                            <div value="white" className="flex gap-5 bg-white w-full px-2 items-center"><div className="bg-white w-10 h-10 border border-black" />white</div>
+                            <div value="white" className="flex gap-5 bg-white w-full px-2 items-center"><div className="bg-white w-10 h-10 border border-black" />white</div>
+                            <div value="white" className="flex gap-5 bg-white w-full px-2 items-center"><div className="bg-white w-10 h-10 border border-black" />white</div>
+                            <div value="white" className="flex gap-5 bg-white w-full px-2 items-center"><div className="bg-white w-10 h-10 border border-black" />white</div>
+                            <div value="white" className="flex gap-5 bg-white w-full px-2 items-center"><div className="bg-white w-10 h-10 border border-black" />white</div>
+                            <div value="white" className="flex gap-5 bg-white w-full px-2 items-center"><div className="bg-white w-10 h-10 border border-black" />white</div>
+                        </div>
+                    </div>}
+                </label>
+                <label>
+                    <h1>Price</h1>
+                    <input type="text" />
+                </label>
+                <label>
+                    <h1>Image</h1>
+                    <input type="file" />
+                </label>
+                <label>
+                    <h1>Genter</h1>
+                    <div className="flex gap-5">
+                        <label className="flex gap-2">
+                            <input type="radio" value={'men'} checked={gender === 'men'}
+                            onChange={() => setGender('men')} />MEN</label>
+                        <label className="flex gap-2"><input type="radio" value={'women'} checked={gender === 'women'}
+                            onChange={() => setGender('women')} />WOMEN</label>
+                    </div>
+                </label>
+                <label>
+                    <h1>Lether</h1>
+                    <div className="flex gap-5">
+                        <label className="flex gap-2"><input type="radio" value={true} checked={lether}
+                            onChange={() => setLether(true)} />Lether</label>
+                        <label className="flex gap-2"><input type="radio" value={false} checked={!lether}
+                            onChange={() => setLether(false)} />NotLether</label>
+                    </div>
+                </label>
+                <label>
+                    <div>Size</div>
+                    <div className=" bg-white px-2 w-60 py-1">select your sizes</div>
+                    {false && <div className="absolute bg-blue-100  flex flex-col gap-2 px-1 w-60 h-72 overflow-y-auto">
+                        {totalSize.map((item, key) => {
+                            return (<h1 key={key} className="bg-white py-1 w-full px-2">
+                                UK{item}
+                            </h1>)
+                        })}
+                    </div>}
+                </label>
+                <label >
+                    <h1 className=" h-5">Product Type</h1>
+                    <div className=" bg-white px-2 w-60 py-1">select your Product Type</div>
+                    {false && <div className="absolute flex flex-col bg-blue-100 gap-2 h-64 overflow-y-scroll">
+                        {productType.map((item, key) => {
+                            return (<h1 className="w-80 bg-white py-1 " key={key}>{item}</h1>)
+                        })}
+                    </div>}
+                </label>
+                <lether>
+                    <h1>Body Fit</h1>
+                    <h1>Slect BodyFit</h1>
+                    {false && <div className="flex absolute bg-blue-100 flex-col gap-2 w-72 px-2">
+                        {bodyfit.map((item, key) => {
+                            return (<h1 className="bg-white px-2 py-1 w-full " key={key}>{item}</h1>)
+                        })}
+                    </div>}
+                </lether>
+            </div>
+            <div className="font-bold text-xl flex flex-col bg-gray-200 w-80 gap-2 px-2 py-1">
+                <label className="bg-white w-full  rounded px-3 py-1">
+                    <h1 className="" onClick={() => { detailes === 'productdetailes' ? setDetailes(null) : setDetailes('productdetailes'); }}><p>Product Detailes</p>{detailes === 'productdetailes'} </h1>
+                    {detailes === 'productdetailes' && <textarea className="h-28 4" />}
+                </label>
+                <label className="bg-white w-full  rounded px-3 py-1">
+                    <h1 onClick={() => { detailes === 'brand' ? setDetailes(null) : setDetailes('brand'); }}>Brand</h1>
+                    {detailes === 'brand' && <textarea className="h-28 4" />}
+                </label>
+                <label className="bg-white w-full  rounded px-3 py-1">
+                    <h1 onClick={() => { detailes === 'lookafterme' ? setDetailes(null) : setDetailes('lookafterme'); }}>Look After Me</h1>
+                    {detailes === 'lookafterme' && <textarea className="h-28 4" />}
+                </label>
+                <label className="bg-white w-full  rounded px-3 py-1">
+                    <h1 onClick={() => { detailes === 'aboutme' ? setDetailes(null) : setDetailes('aboutme'); }}>About Me</h1>
+
+                    <div className='w-full ' >
+                        {detailes === 'aboutme' ||
+                            (<MyEditor />)}
+                    </div>
+                </label>
+            </div>
+        </div   >
+
+    </div>)
+};
+// {
+//     title: { type: String, required: true },
+//     brand: { type: String },
+//     colour: [String,],
+//     product_type: { 
+//    type:String,  
+//    required:[true, "Please select the product type"] },
+//    lether:{type:Boolean,   default:false},
+//    body_fit:[{type:String, required:[true]},],
+
+//    images:[String,],
+//    about:{
+//      type:String,
+//      required:[true,"please fill about session"]
+//    }, 
+//    wishlist:[{Client_id:{  type: mongoose.Schema.Types.ObjectId,
+//    ref:'Cliantdata'}},],
+//   //  description: { type: String },
+//    price: { type: Number, required: true },
+//    size:[{
+//      size:{type:Number,
+//      trim:true,
+//      require:[true, 'Size field cannot be empty'],},
+//      quantity:{
+//          type:Number,
+//          requird:[true]
+//      }
+//  }], //array of numbers for the sizes available in this shoe
+//    productDetals: [String],
+//  },

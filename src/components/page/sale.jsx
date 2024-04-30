@@ -4,13 +4,8 @@ import  Axios  from 'axios';
 
 
 const MenSale = () => {
-//   ()=>{
-// // await Axios.get("http://localhost:3005/asos/showproduct").then((responce)=>setProduct(responce.data));
-//   }
   const location=useLocation()
- const path=location.pathname 
-//  console.log(location.pathname)
-//  console.log(location,path)      
+ const path=location.pathname       
    const [showText,setShowText] = useState(true);
 const [products,setProduct]=useState([]);
 console.log(products)

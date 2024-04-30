@@ -8,6 +8,7 @@ import Home from "./components/page/home";
 import Login from "./components/auth/login";
 import { Toaster } from "react-hot-toast";
 import Updatepassword from "./components/auth/password";
+import CartPage from "./components/page/cartpage";
 import Profile from "./components/page/profile";
 import Men, { Menpage } from "./components/page/men";
 import Women, { Womenpage } from "./components/page/women";
@@ -17,6 +18,7 @@ import Productpage from "./components/page/productpage";
 import MenShoes from "./components/page/shoes/menshoes";
 import Manlayout from "./components/Layout/menlayout";
 import { AddShoeProduct } from "./components/adminpages/addproduct";
+import Wishlist from "./components/page/wishlistpage";
  
 
 function App() {
@@ -29,13 +31,14 @@ function App() {
 <Route path="/" element= {<Menpage/>} />
   {/* <Route path="/:id" sales /> *}/
 </Route> */}
+<Route path="/saveditems"element={<Wishlist/>}/>
+<Route path="/cart" element={<CartPage/>}/>
 <Route path="/men" element={<Manlayout/>}>
 <Route path="showproduct/:id" element={<Productpage/>}/>
 <Route index element={<Menpage />} />
 <Route path="menshoes" element={<MenShoes/>} />
 <Route path="sales" element={<MenSale />} />
 <Route path="addShoeproducts" element={<AddShoeProduct/>}/>
-
 </Route>
 <Route path="/women" element={<Womenpage/>}/>
   </Route>

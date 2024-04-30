@@ -1,12 +1,12 @@
 
 import React, { useEffect, useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
-import Axios from "axios";
 import { FaHeart, FaRegStar, FaStar } from "react-icons/fa";
 import { CiDeliveryTruck, CiHeart } from "react-icons/ci";
 import { MdContentCopy } from "react-icons/md";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import toast from "react-hot-toast";
+import { useraxious } from "../../axious";
 // import sharebutton from 'react-share'
 function Productpage() {
   //     const [id,setid]=useState("hellow");
@@ -17,35 +17,40 @@ function Productpage() {
   const [productImages, setProductImages] = useState();
   const [productdetailes, setProductdetailes] = useState();
   const [bigImage, setBigImage] = useState();
-
+  const [size,setSize]=useState('')
   const product = async () => {
     try {
-        const response = await Axios.get(
-            `http://localhost:3005/asos/product/${productid}`, { withCredentials: true }
-        );
-        const wishlist = response?.data.product.wishlist.filter((item) => item.product_id === productdetailes._id);
-        console.log(wishlist, "wish");
-        setProductdetailes(response.data.product);
-        setProductImages(response.data.product.images);
-        setBigImage({ item: response.data.product.images[0], key: 0 });
+      const response = await useraxious.get(`/product/${productid}`, { withCredentials: true }
+      );
+      const wishlist = response?.data.product.wishlist.filter((item) => item.product_id === productdetailes._id);
+      console.log(wishlist, "wish");
+      setProductdetailes(response.data.product);
+      setProductImages(response.data.product.images);
+      setBigImage({ item: response.data.product.images[0], key: 0 });
     } catch (error) {
-        toast.error(error.message);
+      toast.error(error.message);
     }
-};
+  };
 
   useEffect(() => {
     product();
   }, []);
   async function addtocart() {
+    if(size!==""){
     try {
-      await Axios.put(`http://localhost:3005/asos/updatecart/${productid}`, { withCredentials: true }).then((res) => {
-        toast.success(res.data.message);
-      }).catch((error) => {
-        toast.error(error.message, 'error')
-        console.log(error, "error")
-      });
+      await useraxious.put(`/addtocart/${productid}`, {size}, { withCredentials: true })
+        .then((res) => {
+          toast.success(res.data.message);
+        }).catch((error) => {
+          toast.error(error.message, 'error')
+          console.log(error, "error")
+        });
+
     } catch (error) {
       console.error(error)
+      toast.error(error.message);
+    }}else{
+      toast.error('please select your size')
     }
 
   }
@@ -66,14 +71,14 @@ function Productpage() {
   };
   const [state, dispatch] = useReducer(reducer, initialsate);
   const fixwishlist = async () => {
-    try{
-      await Axios.put(`http://localhost:3005/asos/updatecart/${productid}`, { withCredentials: true }).then((responce) => {
-        // console.log(responce, ":hello")
+    try {
+      await useraxious.post(`/wishlist/${productid}`,{size}, { withCredentials: true }).then((responce) => {
+        console.log(responce, ":hello")
       })
- 
-    }catch(error){
-        toast.error(error.message);
-        console.error(error);
+
+    } catch (error) {
+      toast.error(error.message);
+      console.error(error);
     }
   }
   //------zoom image-//
@@ -129,6 +134,7 @@ function Productpage() {
           <img
             src={bigImage.item}
             className="w-full"
+            // style={{touchAction:' none', userSelect: 'none', WebkitUserDrag:' none', WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)'}}
             // style={{ width: ${zoomLevel}%
             // , transition: "width 0.5s" }}
             alt=""
@@ -194,27 +200,26 @@ function Productpage() {
                 <h1 className="font-semibold flex items-center">SIZE :</h1>
                 <a href="/a#">Size Guide</a>
               </span>
-              <div><select name="size" id="" className="border-2 w-full px-2">
-                <option
+              <div><select  onChange={(e)=>{console.log(setSize(e.target.value))}} name="size" id="" className="border-2 w-full px-2">
+                <option value=''
                 // onClick={()=>{if(state.detailes==="size"){dispatch({type:"show"})}else{dispatch({type:"show",name:"size"})}}}
                 >please select  your size</option>
                 {//state.detailes === "size" &&
-                 productdetailes && productdetailes.size.map((item, key) => { console.log(item, key); return (
-                  <option key={key}  className="relative w-full  text-sm font-bold  border-[1px] px-2">
-                    {/* <div className="flex w-full bg-blue-200 text-slate gap-10">
-                  </div> */}
-                  <span className="">{"UK" + item.size}<span className="font-light  absolute right-0">{item.quantity}</span></span>
-                  
-              </option>)})}
+                  productdetailes && productdetailes.size.map((item, key) => {
+                    console.log(item, key); return (
+                      <option key={key} className="relative w-full  text-sm font-bold  border-[1px] px-2" value={item.size}>
+                        <span className="">{"UK" + item.size}<span className="font-light  absolute right-0">{item.quantity}</span></span>
+                      </option>)
+                  })}
               </select>
 
               </div>
-            <span className="flex gap-1 px-2 ">
-              <button className="w-full bg-green-700 text-lg text-white font-bold rounded  py-1" onClick={addtocart}>
-                ADD TO BAG
-              </button>
-              <button onClick={fixwishlist}>{false?<CiHeart />:<FaHeart />}</button>
-            </span>
+              <span className="flex gap-1 px-2 ">
+                <button className="w-full bg-green-700 text-lg text-white font-bold rounded  py-1" onClick={addtocart}>
+                  ADD TO BAG
+                </button>
+                <button onClick={fixwishlist}>{false ? <CiHeart /> : <FaHeart />}</button>
+              </span>
             </div>
             <div className="w-full flex flex-col gap-3 py-5 px-3 border-2">
               <span className="flex items-center">
@@ -260,7 +265,7 @@ function Productpage() {
               </ul>
               <ul className="px-2">
                 <h1 className="font-medium text-lg flex justify-between border-y-2 items-center">
-                Product Details{" "}
+                  Product Details{" "}
                   <span className="font-normal text-4xl">+</span>
                 </h1>
               </ul>

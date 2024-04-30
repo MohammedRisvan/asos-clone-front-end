@@ -43,7 +43,7 @@ const Login = () => {
     }
     setError(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-      toast.success("Logged in Successfully");
+      // toast.success("Logged in Successfully");
       passerver();
     } else {
       toast.error("please enter vallid data");
