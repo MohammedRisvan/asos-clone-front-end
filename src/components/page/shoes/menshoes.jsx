@@ -52,7 +52,7 @@ const [pricestart,setstatprice]=useState()
   const Itempage=(item)=>{
     
     sessionStorage.setItem('productid',item._id)
-    window.location.href=`showproduct/${item.title}`
+    window.location=`/showproduct/${item.title}`
   }
   // function capitalizeFirstLetter(str) {
   //   return str.replace(/^\w/, c => c.toUpperCase());

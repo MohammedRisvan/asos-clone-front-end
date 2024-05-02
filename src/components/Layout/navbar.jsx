@@ -11,13 +11,16 @@ import { useNavigate } from "react-router-dom";
 
 const Navber = () => {
   const [profile, setProfile] = useState(false);
-
+  const [search,setSearch]=useState(""); 
   const navigate = useNavigate();
   const showProfile=()=>{
     // const token=document.cookie()
     // console.log(token)
     // if(){
 
+  }
+  function SEARCH () {
+    navigate('/search/:id')
   }
 
   return (
@@ -49,7 +52,9 @@ const Navber = () => {
           <input
             className="w-full h-8 px-5 rounded-xl"
             placeholder="Search for itenms and brands ..."
+            onChange={(e)=>{setSearch(e.target.value)}}
           />
+          <button onClick={SEARCH}>search</button>
         </div>
         <button className="h-full px-5"
          onMouseEnter={()=>{setProfile(true)}}

@@ -19,6 +19,7 @@ import MenShoes from "./components/page/shoes/menshoes";
 import Manlayout from "./components/Layout/menlayout";
 import { AddShoeProduct } from "./components/adminpages/addproduct";
 import Wishlist from "./components/page/wishlistpage";
+import Allcollection from "./components/ssearchpage";
  
 
 function App() {
@@ -31,10 +32,11 @@ function App() {
 <Route path="/" element= {<Menpage/>} />
   {/* <Route path="/:id" sales /> *}/
 </Route> */}
+<Route path="/search/:id" element={<Allcollection/>}/>
 <Route path="/saveditems"element={<Wishlist/>}/>
 <Route path="/cart" element={<CartPage/>}/>
+<Route path="/showproduct/:id" element={<Productpage/>}/>
 <Route path="/men" element={<Manlayout/>}>
-<Route path="showproduct/:id" element={<Productpage/>}/>
 <Route index element={<Menpage />} />
 <Route path="menshoes" element={<MenShoes/>} />
 <Route path="sales" element={<MenSale />} />

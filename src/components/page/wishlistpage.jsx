@@ -23,7 +23,7 @@ getwishlist();
 async function Delitem(id,size){
     try{
         console.log(id,size);
-        await useraxious.delete(`/deletewishlistitem/${id}`,{size},{withCredentials:true}).then((res)=>{
+        await useraxious.delete(`/deletewishlistitem/${id}`,{data:{size},withCredentials:true}).then((res)=>{
             console.log(res);
         })
     }catch(error){
